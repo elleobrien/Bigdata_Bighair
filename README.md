@@ -4,7 +4,7 @@ This repository contains several analyses and samples from a hair dataset. Impor
 
 **Hair_Maps** contains the hair "heat maps" for every image in the yearbook dataset. The maps are probabilistic (scaled 0-1).
 
-**Looks_by_Decades** contains a folder of sample images representing every decade from 1930-2010. An accompanying .csv file provides demographic info (gender, decade) about each picture.
+**Looks_by_Decades** contains a folder of sample images representing every decade from 1930-2010. An accompanying .csv file provides demographic info (male/female label, decade) about each picture.
 
 **Size_by_Year** contains several analysis scripts to 
 + Measure hair density in every picture in the dataset, 
@@ -16,3 +16,4 @@ This repository contains several analyses and samples from a hair dataset. Impor
 + Estimate the hair size in the sample images in the "Looks_by_Decades" directory. 
   - The script 3_Size_in_Sample_Images.R estimates the hair density in every image selected as representative of a decade (in Looks_by_Decades) and outputs the estimates in Sample_image_hair_size.csv.
   
+**Gender_trends** contains a script to estimate the disriminability of two binary labels (male/female) in the dataset (Discriminability_by_Year.R) using random forest classification. The input is coordinates.csv, which contains the four features measured for each hair map, and the output is Discriminability_by_year.csv. The output file includes both actual discriminability-per-year as well as a smoothed timeseries. 
