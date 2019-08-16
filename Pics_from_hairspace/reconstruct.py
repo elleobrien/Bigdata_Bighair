@@ -61,7 +61,7 @@ outputs = decoder(encoder(inputs)[2])
 vae = Model(inputs, outputs, name='vae_mlp')
 
 # Load weights
-vae.load_weights('vae_mlp_hair_4d.h5')
+vae.load_weights('../../VAE/vae_mlp_hair_4d.h5')
 
 
 
