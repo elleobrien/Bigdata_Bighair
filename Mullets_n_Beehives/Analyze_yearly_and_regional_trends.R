@@ -2,12 +2,12 @@ rm(list = ls())
 library(reshape2)
 library(dplyr)
 
-#setwd("P://Image//Bigdata_Bighair")
+setwd("P://Image//Bigdata_Bighair/Mullets_n_beehives")
 
 # Count the mullets!
 mullist = list.files("./Mullet_samples")
 beelist = list.files("./Beehive_samples")
-
+strlist = list.files("./Straight_samples")
 
 # Get big directory of all pics in the dataset
 df <- read.csv("../Gender_trends/coordinates.csv")
@@ -26,15 +26,16 @@ df <- df %>%
 df$file <- gsub("-hair.png", ".png",df$file)
 df$is_mullet <- ifelse(df$file %in% mullist,1,0)
 df$is_beehive <- ifelse(df$file %in% beelist,1,0)
-
+df$is_straight <- ifelse(df$file %in% strlist,1,0)
 
 # Get the number of mullets by year
 yearly <- df %>%
   group_by(year)%>%
   summarise(mullet_density = mean(is_mullet),
-            beehive_density = mean(is_beehive))
+            beehive_density = mean(is_beehive),
+            str_density = mean(is_straight))
 
-ggplot(yearly, aes(year, beehive_density))+
+ggplot(yearly, aes(year, str_density))+
   geom_point()
 
 
@@ -58,7 +59,8 @@ df$region <- ifelse(df$state %in% ne, "Northeast",
 geographic <- df %>%
   group_by(region)%>%
   summarise(mullet_density = mean(is_mullet),
-            beehive_density = mean(is_beehive))
+            beehive_density = mean(is_beehive),
+            str_density = mean(is_straight))
 write.csv(geographic,"Hairdos_by_region.csv", row.names = FALSE)
 
 
