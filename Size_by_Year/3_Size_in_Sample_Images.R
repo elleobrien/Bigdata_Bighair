@@ -18,12 +18,13 @@ size_df$file = str_replace(size_df$file, "-hair.png",".png")
 
 
 # Load in a list of our sample images
-samples <- read.csv("../Looks_by_Decade/Most_representative_images_by_decade.csv")
+samples <- read.csv("../Looks_by_Decade/Most_representative_images_by_FiveYear.csv")
 
 # Merge these dataframes!
-df_sum <- merge(size_df, samples, by = "file", all.y = TRUE)
+df_sum <- merge(size_df, samples, by = "file")
 
-write.csv(df_sum, "Sample_image_hair_size.csv", row.names = FALSE)
+write.csv(df_sum, "Sample_image_hair_size_fiveyear.csv", row.names = FALSE)
+
 
 
 ####################
@@ -33,7 +34,7 @@ samp <- df_sum[sample(nrow(df_sum), 6), ]
 samp <- samp[order(samp$density),]
 get_list = samp$file
 
-img_files = file.path("../Looks_by_Decade/Sample_Images", get_list)
+img_files = file.path("../Looks_by_Decade/Representative_of_FiveYear", get_list)
 
 p1 <- ggdraw() +
   draw_image(img_files[1], scale = 1)
