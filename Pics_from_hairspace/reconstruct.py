@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Jun  5 13:42:56 2019
-
+This script samples a trained decoder model to query the features represented along each principal axis of the latent space. 
 @author: eobrien
 """
 from keras.layers import Lambda, Input, Dense
