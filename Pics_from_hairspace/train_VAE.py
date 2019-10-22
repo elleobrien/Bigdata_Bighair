@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Jun  2 15:13:13 2019
-
+Adapted from https://github.com/keras-team/keras/blob/master/examples/variational_autoencoder.py
 Variational autoencoder working on hair probability maps
 
 # Reference
@@ -46,17 +46,17 @@ def sampling(args):
     epsilon = K.random_normal(shape=(batch, dim))
     return z_mean + K.exp(0.5 * z_log_var) * epsilon
 
-
+# A helper function to load the hair dataset in as a numpy array
 def load_hair_dataset(rowsize,colsize):
-    folder1 = "../Datasets/Berkeley_Yearbook/F_hair/*.png"
-    folder2 = "../Datasets/Berkeley_Yearbook/M_hair/*.png"
+    folder1 = "../Hair_Maps/F_hair/*.png"
+    folder2 = "../Hair_Maps/M_hair/*.png"
     
     train_files = glob.glob(folder1) + glob.glob(folder2)
     
     print("Working with {0} images".format(len(train_files)))
 
     # Original Dimensions    
-    channels = 1
+    channels = 1 #hairmaps are grayscale
     dataset = np.ndarray(shape=(len(train_files), rowsize, colsize,channels),
                          dtype=np.float32)
     
@@ -64,8 +64,6 @@ def load_hair_dataset(rowsize,colsize):
     for _file in train_files:
         #img = load_img(_file, grayscale = True)  # this is a PIL image
         img = Image.open(_file)
-        #img = img.convert('RGB')
-        #img.thumbnail((image_width, image_height))
         # Convert to Numpy Array
         x = img_to_array(img)  
         #x = x.astype('float32') / 255
@@ -80,23 +78,22 @@ def load_hair_dataset(rowsize,colsize):
     return(dataset)
     
 
-# MNIST dataset
-size = 128
+# Load hair dataset
+size = 128 # downsample from 256 -> 128 px. squares for efficiency.
 data = load_hair_dataset(size,size)
-(x_train, x_test) = train_test_split(data, shuffle=False, test_size = 0.05)
+(x_train, x_test) = train_test_split(data, shuffle=False, test_size = 0.05) # Split, 5% hold-out on test set
 
 image_size = x_train.shape[1]
 original_dim = image_size * image_size
-x_train = np.reshape(x_train, [-1, original_dim])
+x_train = np.reshape(x_train, [-1, original_dim]) # Reshape train and test vectors
 x_test = np.reshape(x_test, [-1, original_dim])
-#x_train = x_train.astype('float32') / 255
-#x_test = x_test.astype('float32') / 255
+
 
 # network parameters
 input_shape = (original_dim, )
-intermediate_dim = 1024
-batch_size = 16
-latent_dim = 3
+intermediate_dim = 1024 # This is guesswork, feel free to try other sizes
+batch_size = 16 # Go as big as your GPU will let you
+latent_dim = 4
 epochs = 50
 
 # VAE model = encoder + decoder
@@ -107,7 +104,6 @@ z_mean = Dense(latent_dim, name='z_mean')(x)
 z_log_var = Dense(latent_dim, name='z_log_var')(x)
 
 # use reparameterization trick to push the sampling out as input
-# note that "output_shape" isn't necessary with the TensorFlow backend
 z = Lambda(sampling, output_shape=(latent_dim,), name='z')([z_mean, z_log_var])
 
 # instantiate encoder model
@@ -155,9 +151,7 @@ if __name__ == '__main__':
     vae.add_loss(vae_loss)
     vae.compile(optimizer='adam', loss = '')
     vae.summary()
-   # plot_model(vae,
-   #            to_file='vae_mlp.png',
-   #            show_shapes=True)
+
 
     # Set the callbacks
     filepath="weights-improvement-{epoch:02d}.hdf5"
@@ -172,4 +166,4 @@ if __name__ == '__main__':
             batch_size=batch_size,
             validation_data=(x_test, None),
             callbacks=callbacks_list)
-    vae.save_weights('vae_mlp_hair_3d.h5')
+    vae.save_weights('vae_mlp_hair_4d.h5')
