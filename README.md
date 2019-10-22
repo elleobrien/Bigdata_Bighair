@@ -16,4 +16,8 @@ This repository contains several analyses and samples from a hair dataset. Impor
 + Estimate the hair size in the sample images in the "Looks_by_Decades" directory. 
   - The script 3_Size_in_Sample_Images.R estimates the hair density in every image selected as representative of a decade (in Looks_by_Decades) and outputs the estimates in Sample_image_hair_size.csv.
   
+ **Pics_from_hairspace** contains scripts to train and sample a variational autoencoder, which generates pictures of hair along four principal axes. Trained models are not included as these files are quite large.
+ 
+ **Mullets_n_Beehives** contain labeled examples of mullets, beehives, and straighthair, along with a tabular data regarding the frequency of each look per year. 
+  
 **Gender_trends** contains a script to estimate the disriminability of two binary labels (male/female) in the dataset (Discriminability_by_Year.R) using random forest classification. The input is coordinates.csv, which contains the four features measured for each hair map, and the output is Discriminability_by_year.csv. The output file includes both actual discriminability-per-year as well as a smoothed timeseries. 
