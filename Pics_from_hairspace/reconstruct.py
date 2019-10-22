@@ -61,11 +61,11 @@ outputs = decoder(encoder(inputs)[2])
 vae = Model(inputs, outputs, name='vae_mlp')
 
 # Load weights
-vae.load_weights('../../VAE/vae_mlp_hair_4d.h5')
+vae.load_weights('vae_mlp_hair_4d.h5')
 
 
 
-# display a 2D manifold of the digits
+# display a 1D manifold of the space, walking along each axis.
 n = 50  # figure with 15x15 digits
 digit_size = 128
 epsilon_std = 0.5
