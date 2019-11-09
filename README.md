@@ -2,7 +2,7 @@
 
 This repository contains several analyses and samples from a hair dataset. Important features:
 
-**Hair_Maps** contains the hair "heat maps" for every image in the yearbook dataset. The maps are probabilistic (scaled 0-1).
+**Hair_Maps** contains the hair "heat maps" for every image in the yearbook dataset created by [Ginosar et al](https://people.eecs.berkeley.edu/~shiry/projects/yearbooks/yearbooks.html). The maps are probabilistic (scaled 0-1).
 
 **Looks_by_Decades** contains a folder of sample images representing every decade from 1930-2010. An accompanying .csv file provides demographic info (male/female label, decade) about each picture.
 
